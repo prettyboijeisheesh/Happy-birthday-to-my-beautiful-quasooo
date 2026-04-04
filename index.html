@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday! 💖</title>
+<style>
+  /* GENERAL LAYOUT */
+  body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg,#ffdee9,#b5fffc);
+    overflow-x: hidden;
+    position: relative;
+  }
+  .container {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    position: relative;
+    z-index: 2;
+  }
+  h1 {
+    font-size: 2em;
+    color: #ff69b4;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 5px #fff;
+  }
+  .photo, video {
+    width: 165px;  /* 10% bigger */
+    height: 165px; /* 10% bigger */
+    border-radius: 50%;
+    border: 4px solid #ffb6c1;
+    margin-bottom: 20px;
+    object-fit: cover;
+  }
+  #button-container button {
+    font-size: 1.5em;
+    padding: 10px 30px;
+    margin: 10px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  #yes-btn { background-color: #ff69b4; color: white; }
+  #no-btn { background-color: #add8e6; color: white; }
+  .signature {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #ff69b4;
+    font-weight: bold;
+  }
+  /* Balloons */
+  #balloon-container .balloon {
+    width: 40px; height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -80px;
+    animation: rise 6s linear infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes rise {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-700px); }
+  }
+  /* Stars */
+  #stars { position: absolute; width:100%; height:100%; top:0; left:0; z-index:1; pointer-events:none; }
+  .star { width:2px; height:2px; background:white; position:absolute; border-radius:50%; opacity:0.8; will-change: transform, opacity; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="typing">Do you love me as much as I love you?</h1>
+  <img src="assets/images/cutiepie.jpg" alt="Cutiepie" class="photo" id="celebrant-photo">
+  <div id="button-container">
+    <button id="yes-btn">YES</button>
+    <button id="no-btn">NO</button>
+  </div>
+  <p class="signature">Your lover: Jc ❤️</p>
+</div>
+
+<div id="balloon-container"></div>
+<div id="stars"></div>
+
+<script>
+/********** Variables **********/
+const typingElement = document.getElementById("typing");
+const yesBtn = document.getElementById("yes-btn");
+const noBtn = document.getElementById("no-btn");
+const photo = document.getElementById("celebrant-photo");
+const music = new Audio("assets/birthday-music.mp3");
+
+let typingInterval = null;
+
+const noMessages = [
+  "Are you sure? 😢", "For real?? 😭", "So you don't love me anymore? 💔",
+  "Try again… I’ll wait 🥺", "That hurts 😔", "Please think again 💖",
+  "Don't do this to me 😭", "Last chance… 😳", "You sure sure?? 😩",
+  "I know you love me 😏", "Stop playing 😭", "You're joking right? 😅",
+  "Be honest... 🥺", "Say YES already 💖"
+];
+
+/********** Typing Effect **********/
+function typeMessage(text){
+  if(typeof text!=="string") return;
+  if(typingInterval) clearInterval(typingInterval);
+  typingElement.textContent="";
+  let i=0;
+  const speed = window.innerWidth < 768 ? 150 : 100;
+  typingInterval = setInterval(()=>{
+    typingElement.textContent += text[i];
+    i++;
+    if(i>=text.length){ clearInterval(typingInterval); typingInterval=null; }
+  }, speed);
+}
+
+/********** Hearts **********/
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.textContent="💖";
+  heart.setAttribute("data-heart","true");
+  heart.style.position="fixed";
+  heart.style.left = Math.random()*window.innerWidth + "px";
+  heart.style.top = Math.random()*window.innerHeight + "px";
+  heart.style.fontSize=(window.innerWidth < 768 ? 15 : 20) + Math.random()*20 + "px";
+  heart.style.opacity=1;
+  heart.style.pointerEvents="none";
+  heart.style.transition="all 1.5s ease-out";
+  document.body.appendChild(heart);
+  setTimeout(()=>{
+    heart.style.top = (parseFloat(heart.style.top)-150-Math.random()*50) + "px";
+    heart.style.opacity=0;
+    heart.style.transform=`rotate(${Math.random()*360}deg)`;
+  },10);
+  setTimeout(()=>heart.remove(),1500);
+}
+
+/********** Confetti **********/
+function startConfetti(){
+  const colors=["#ffb6c1","#ff69b4","#add8e6","#fff0f5","#ffe4e1"];
+  const count = window.innerWidth<768 ? 50 : 100;
+  for(let i=0;i<count;i++){
+    const confetti=document.createElement("div");
+    confetti.setAttribute("data-confetti","true");
+    confetti.style.position="fixed";
+    confetti.style.width="6px";
+    confetti.style.height="6px";
+    confetti.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    confetti.style.left=Math.random()*window.innerWidth+"px";
+    confetti.style.top="-10px";
+    confetti.style.opacity=1;
+    confetti.style.borderRadius="50%";
+    confetti.style.pointerEvents="none";
+    confetti.style.transition="all 2.5s linear";
+    document.body.appendChild(confetti);
+    setTimeout(()=>{
+      confetti.style.top = window.innerHeight + "px";
+      confetti.style.left = parseFloat(confetti.style.left)+(Math.random()*100-50) + "px";
+      confetti.style.opacity=0;
+    },10);
+    setTimeout(()=>confetti.remove(),2500);
+  }
+}
+
+/********** Balloons **********/
+function launchBalloons(amount){
+  const balloonContainer=document.getElementById("balloon-container");
+  const mobileAmount = window.innerWidth<768?5:amount;
+  for(let i=0;i<mobileAmount;i++){
+    const balloon=document.createElement("div");
+    balloon.classList.add("balloon");
+    balloon.style.backgroundColor=`hsl(${Math.random()*360},80%,70%)`;
+    balloon.style.left=Math.random()*90+'%';
+    const duration = window.innerWidth<768 ? (4+Math.random()*2)+'s' : (6+Math.random()*4)+'s';
+    balloon.style.animationDuration=duration;
+    balloonContainer.appendChild(balloon);
+    setTimeout(()=>balloon.remove(), parseFloat(duration)*1000);
+  }
+}
+
+/********** Stars **********/
+function createStars(amount){
+  const stars=document.getElementById("stars");
+  for(let i=0;i<amount;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    star.style.top=Math.random()*100+'%';
+    star.style.left=Math.random()*100+'%';
+    stars.appendChild(star);
+    setTimeout(()=>star.remove(),10000);
+  }
+}
+
+/********** Shake Screen **********/
+function shakeScreen(){
+  const container=document.querySelector(".container");
+  let i=0;
+  const interval=setInterval(()=>{
+    const x=Math.random()*10-5;
+    const y=Math.random()*10-5;
+    container.style.transform=`translate(${x}px,${y}px)`;
+    i++;
+    if(i>10){ clearInterval(interval); container.style.transform="translate(0,0)"; }
+  },20);
+}
+
+/********** YES Button **********/
+yesBtn.addEventListener("click",()=>{
+  music.play();
+  yesBtn.style.boxShadow="0 0 30px 10px #ff69b4";
+  startConfetti();
+  const heartsCount = window.innerWidth<768?25:50;
+  for(let i=0;i<heartsCount;i++) createHeart();
+
+  // FIXED SWEET MESSAGE
+  typeMessage("Happy Birthday, My Quasoo! 💖 You’re the most special person in my life, I love you forever! 🥰");
+
+  document.getElementById("button-container").style.display="none";
+  launchBalloons(10);
+  createStars(50);
+
+  // Replace photo with video
+  const video=document.createElement("video");
+  video.src="assets/video/birthday.mp4"; // put your MP4 here
+  video.autoplay=true;
+  video.muted=true;
+  video.loop=true;
+  video.style.width="165px";   // 10% bigger
+  video.style.height="165px";  // 10% bigger
+  video.style.borderRadius="50%";
+  video.style.border="4px solid #ffb6c1";
+  video.style.objectFit="cover";
+  photo.parentNode.replaceChild(video,photo);
+});
+
+/********** NO Button **********/
+noBtn.addEventListener("mousedown",()=>{
+  const randX=Math.floor(Math.random()*200)-100;
+  const randY=Math.floor(Math.random()*60)-30;
+  noBtn.style.position="relative";
+  noBtn.style.left=randX+"px";
+  noBtn.style.top=randY+"px";
+
+  let style=window.getComputedStyle(noBtn);
+  let currentSize=parseInt(style.fontSize);
+  if(currentSize>0) noBtn.style.fontSize=currentSize-4+"px";
+  if(currentSize<=4) noBtn.style.display="none";
+
+  const randomText=noMessages[Math.floor(Math.random()*noMessages.length)];
+  typeMessage(randomText);
+  shakeScreen();
+});
+</script>
+</body>
+</html>

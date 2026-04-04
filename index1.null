@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 💖</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 id="typing"></h1>
+    <img src="assets/images/cutiepie.jpg" alt="Cutiepie" class="photo">
+    <div id="button-container">
+      <button id="yes-btn">YES</button>
+      <button id="no-btn">NO</button>
+    </div>
+    <p class="signature">Your lover: Jc ❤️</p>
+  </div>
+
+  <!-- Floating balloons -->
+  <div id="balloon-container"></div>
+
+  <!-- Stars -->
+  <div id="stars"></div>
+
+  <!-- Scripts -->
+  <script src="assets/confetti.js"></script>
+  <script src="assets/heart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
