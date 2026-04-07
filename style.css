@@ -1,0 +1,96 @@
+/* General layout */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(135deg, #ffdee9, #b5fffc);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.container {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2em;
+  color: #ff69b4;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 5px #fff;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #ffb6c1;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+#button-container button {
+  font-size: 1.5em;
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#yes-btn {
+  background-color: #ff69b4;
+  color: white;
+}
+
+#no-btn {
+  background-color: #add8e6;
+  color: white;
+}
+
+.signature {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #ff69b4;
+  font-weight: bold;
+}
+
+/* Balloon container */
+#balloon-container .balloon {
+  width: 40px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -80px;
+  animation: rise 8s linear infinite;
+}
+
+/* Rising animation */
+@keyframes rise {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-700px); }
+}
+
+/* Stars */
+#stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  z-index: 1;
+  background: transparent;
+  pointer-events: none;
+}
+
+.star {
+  width: 2px;
+  height: 2px;
+  background: white;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.8;
+}
